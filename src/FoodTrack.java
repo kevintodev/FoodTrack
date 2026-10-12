@@ -31,7 +31,7 @@ public class FoodTrack {
                 "Wrap de pollo"
         };
         double[] prices = {5.25, 4.50, 2.50, 9.50, 7.95};
-        int[] units = {0, 0, 0, 0, 0};
+        int[] units = new int[products.length];
 
         // do-while: menú de pedido con switch
         int option;
@@ -45,14 +45,14 @@ public class FoodTrack {
                 case 0:
                     System.out.println(MAGENTA + "Finalizando compra..." + RESET);
                     break;
-                case 1, 2, 3, 4, 5:
-                    // Rellenar el carrito
-                    units[option - 1]++;
-                    System.out.printf("%s[+] %s Añadido a la cesta %s%n",
-                            GREEN, products[option - 1], RESET);
-                    break;
                 default:
-                    System.out.println(RED + "[ERROR] Opción no válida" + RESET);
+                    if ( option >= 1 && option <= products.length ) {
+                        units[option - 1]++;
+                        System.out.printf("%s[+] %s Añadido a la cesta %s%n",
+                                GREEN, products[option - 1], RESET);
+                    } else {
+                        System.out.println(RED + "[ERROR] Opción no válida" + RESET);
+                    }
                     break;
             }
 
