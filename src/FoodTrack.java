@@ -35,7 +35,7 @@ public class FoodTrack {
         // do-while: menú de pedido con switch
         int option;
         do {
-            drawMenu(products, prices);
+            drawMenu(products, prices, units);
             // Elegir opción
             System.out.print(CYAN + "Elige opción: " + RESET);
             option = sc.nextInt();
@@ -47,6 +47,8 @@ public class FoodTrack {
                 case 1, 2, 3, 4, 5:
                     // Rellenar el carrito
                     units[option - 1]++;
+                    System.out.printf("%s[+] %s Añadido a la cesta %s%n",
+                            GREEN, products[option - 1], RESET);
                     break;
                 default:
                     System.out.println(RED + "[ERROR] Opción no válida" + RESET);
@@ -147,15 +149,17 @@ public class FoodTrack {
         return false;
     }
 
-    static void drawMenu(String[] products, double[] prices) {
+    static void drawMenu(String[] products, double[] prices,  int[] units) {
         /*
         * Dibujar el menú del día
         * */
 
         System.out.println(MAGENTA + "===== MENÚ DEL DÍA =====" + RESET);
         for (int i = 0; i < products.length  ; i++) {
-            System.out.printf("%s%d. %s ..... %.2f €%s%n",
+            System.out.printf("%s%d. %s ..... %.2f €%s",
                     CYAN, i + 1, products[i], prices[i], RESET);
+            System.out.printf("%s (en tu cesta: %d unidades) %s%n",
+                    MAGENTA, units[i],RESET);
         }
         System.out.println(CYAN + "0. Finalizar pedido" + RESET);
 
@@ -198,9 +202,9 @@ public class FoodTrack {
                 (discount != 0) ? "(10% dto.)" : "(sin descuento)", RESET);
 
         System.out.println(BLUE + "=========== FACTURA ============" + RESET);
-        System.out.printf("%sSubtotal .......... %.2f€%s%n", CYAN, subTotal, RESET);
-        System.out.printf("%sDescuento .......... -%.2f€%s%n", CYAN, discount, RESET);
-        System.out.printf("%sTOTAL .......... %.2f€%s%n", MAGENTA, total, RESET);
+        System.out.printf("%sSubtotal .......... %.2f €%s%n", CYAN, subTotal, RESET);
+        System.out.printf("%sDescuento .......... -%.2f €%s%n", CYAN, discount, RESET);
+        System.out.printf("%sTOTAL .......... %.2f €%s%n", MAGENTA, total, RESET);
         System.out.println(CYAN + "Gracias por su compra, " + USER + RESET);
 
     }
