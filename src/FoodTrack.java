@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Scanner;
 
 public class FoodTrack {
@@ -86,7 +87,8 @@ public class FoodTrack {
         * */
 
         System.out.print(YELLOW + "¿Pagar en efectivo? (s/n): " + RESET);
-        char inCash = sc.nextLine().toLowerCase().charAt(0);
+        String line = sc.nextLine().trim().toLowerCase();
+        char inCash = line.isEmpty() ? 'n' : line.charAt(0);
         return inCash == 's';
 
     }
