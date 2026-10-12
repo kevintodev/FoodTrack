@@ -5,6 +5,15 @@ public class FoodTrack {
     static final String USER = "ana";
     static final String KEY = "java123";
 
+    /* Colores */
+    static final String	RESET = "\u001B[0m";
+    static final String	RED	 = "\u001B[31m";
+    static final String	GREEN = "\u001B[32m";
+    static final String	YELLOW = "\u001B[33m";
+    static final String	BLUE = "\u001B[34m";
+    static final String	MAGENTA = "\u001B[35m";
+    static final String	CYAN = "\u001B[36m";
+    static final String	WHITE = "\u001B[37m";
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         if (!login(sc)) {
@@ -27,19 +36,19 @@ public class FoodTrack {
         do {
             drawMenu(products, prices);
             // Elegir opción
-            System.out.print("Elige opción: ");
+            System.out.print(CYAN + "Elige opción: " + RESET);
             option = sc.nextInt();
             sc.nextLine();
             switch (option) {
                 case 0:
-                    System.out.println("Finalizando compra...");
+                    System.out.println(MAGENTA + "Finalizando compra..." + RESET);
                     break;
                 case 1, 2, 3, 4, 5:
                     // Rellenar el carrito
                     units[option - 1]++;
                     break;
                 default:
-                    System.out.println("Opción no válida");
+                    System.out.println(RED + "[ERROR] Opción no válida" + RESET);
                     break;
             }
 
@@ -48,7 +57,7 @@ public class FoodTrack {
 
         // Comprobar si tiene la cesta vacía
         if ( !hasItems(units) ) {
-            System.out.println("Tienes la cesta vacía. Gracias por su visita, " + USER);
+            System.out.println(YELLOW + "Tienes la cesta vacía. Gracias por su visita, " + USER + RESET);
         } else {
             // Decidir si pagar en cash o con tarjeta
             boolean inCash = inCash(sc);
@@ -66,7 +75,7 @@ public class FoodTrack {
     }
 
     private static boolean inCash(Scanner sc) {
-        System.out.print("¿Pagar en efectivo? (s/n): ");
+        System.out.print(YELLOW + "¿Pagar en efectivo? (s/n): " + RESET);
         char inCash = sc.nextLine().toLowerCase().charAt(0);
         return inCash == 's';
 
@@ -88,14 +97,14 @@ public class FoodTrack {
         int userAttempts = 0;
 
         while ( userAttempts < MAX_ATTEMPTS ) {
-            System.out.println("===== INICIAR SESIÓN =====");
-            System.out.printf("(Intentos restantes: %d de %d)%n",
-                    (MAX_ATTEMPTS - userAttempts), MAX_ATTEMPTS);
+            System.out.println(BLUE + "===== INICIAR SESIÓN =====" + RESET);
+            System.out.printf("%s(Intentos restantes: %d de %d)%s%n", CYAN,
+                    (MAX_ATTEMPTS - userAttempts), MAX_ATTEMPTS, RESET);
             // Pedir usuario
-            System.out.print("Ingresa nombre de usuario: ");
+            System.out.print(BLUE + "Ingresa nombre de usuario: " + RESET);
             String userRequest = sc.nextLine();
             // Pedir contraseña
-            System.out.print("Ingresa clave: ");
+            System.out.print(BLUE + "Ingresa clave: " + RESET);
             String keyRequest = sc.nextLine();
 
             userAttempts++;
@@ -103,32 +112,33 @@ public class FoodTrack {
 
             if ( userRequest.equals(USER) && keyRequest.equals(KEY)) {
                 // Éxito de inicio de sesión. Devolver true
-                System.out.printf("[OK] Acceso concedido (intento %d de %d)%n",
-                        userAttempts, MAX_ATTEMPTS);
+                System.out.printf("%s[OK] Acceso concedido (intento %d de %d)%s%n",
+                        GREEN, userAttempts, MAX_ATTEMPTS, RESET);
                 return true;
             }
-            System.out.println("[ERROR] Nombre de usuario o contraseña incorrecta");
+            System.out.println(RED + "[ERROR] Nombre de usuario o contraseña incorrecta" + RESET);
 
         }
-        System.out.println("[ERROR] Has agotado los intentos de inicio de sesión");
+        System.out.println(RED + "[ERROR] Has agotado los intentos de inicio de sesión" + RESET);
         return false;
     }
 
     static void drawMenu(String[] products, double[] prices) {
-        System.out.println("===== MENÚ DEL DÍA =====");
+        System.out.println(MAGENTA + "===== MENÚ DEL DÍA =====" + RESET);
         for (int i = 0; i < products.length  ; i++) {
-            System.out.printf("%d. %s ..... %.2f €%n", i + 1, products[i], prices[i]);
+            System.out.printf("%s%d. %s ..... %.2f €%s%n",
+                    CYAN, i + 1, products[i], prices[i], RESET);
         }
-        System.out.println("0. Finalizar pedido");
+        System.out.println(CYAN + "0. Finalizar pedido" + RESET);
 
     }
 
     static void showCart(String[] products, double[] prices, int[] units) {
-        System.out.println("===== CESTA DE PRODUCTOS =====");
+        System.out.println(YELLOW + "===== CESTA DE PRODUCTOS =====" + RESET);
         for (int i = 0; i < products.length; i++) {
             if ( units[i] > 0 ){
-                System.out.printf("[+] %s ..... %.2f € ..... Unidades: %d%n",
-                        products[i], prices[i], units[i]);
+                System.out.printf("%s[+] %s ..... %.2f € ..... Unidades: %d%s%n",
+                        CYAN, products[i], prices[i], units[i], RESET);
             }
         }
     }
@@ -144,14 +154,14 @@ public class FoodTrack {
         // Fuente redondear 0.05 más cercano: https://stackoverflow.com/questions/9256005/java-rounding-to-nearest-0-05
         total = ( inCash ) ? Math.round(total * 20.0) / 20.0 : total;
 
-        System.out.printf("Pagando %s %s%n",(inCash) ? "en efectivo" : "con tarjeta",
-                (discount != 0) ? "(10% dto.)" : "(sin descuento)");
+        System.out.printf("%sPagando %s %s%s%n", GREEN, (inCash) ? "en efectivo" : "con tarjeta",
+                (discount != 0) ? "(10% dto.)" : "(sin descuento)", RESET);
 
-        System.out.println("=========== FACTURA ============");
-        System.out.printf("Subtotal .......... %.2f€%n", subTotal);
-        System.out.printf("Descuento .......... -%.2f€%n", discount);
-        System.out.printf("TOTAL .......... %.2f€%n", total);
-        System.out.println("Gracias por su compra, " + USER);
+        System.out.println(BLUE + "=========== FACTURA ============" + RESET);
+        System.out.printf("%sSubtotal .......... %.2f€%s%n", CYAN, subTotal, RESET);
+        System.out.printf("%sDescuento .......... -%.2f€%s%n", CYAN, discount, RESET);
+        System.out.printf("%sTOTAL .......... %.2f€%s%n", MAGENTA, total, RESET);
+        System.out.println(CYAN + "Gracias por su compra, " + USER + RESET);
 
     }
 
