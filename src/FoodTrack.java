@@ -14,6 +14,7 @@ public class FoodTrack {
     static final String	MAGENTA = "\u001B[35m";
     static final String	CYAN = "\u001B[36m";
     static final String	WHITE = "\u001B[37m";
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         if (!login(sc)) {
@@ -75,6 +76,13 @@ public class FoodTrack {
     }
 
     private static boolean inCash(Scanner sc) {
+        /*
+        * Preguntar si pagar en efectivo
+        * Devuelve:
+        * - true si ha pulsado 's',
+        * - false, si no
+        * */
+
         System.out.print(YELLOW + "¿Pagar en efectivo? (s/n): " + RESET);
         char inCash = sc.nextLine().toLowerCase().charAt(0);
         return inCash == 's';
@@ -82,6 +90,14 @@ public class FoodTrack {
     }
 
     private static boolean hasItems(int[] units) {
+        /*
+        * Comprobar si ha finalizado con productos
+        * en el carrito.
+        * Devuelve
+        * - true si totalUnits > 0
+        * - false, si no
+        * */
+
         int totalUnits = 0;
         for (int unit : units) {
             totalUnits += unit;
@@ -91,6 +107,14 @@ public class FoodTrack {
 
 
     static boolean login (Scanner sc) {
+        /*
+        * Sistema de login
+        * Pide usuario y clave. Máximo 3 intentos
+        * Devuelve:
+        * - true: login correcto
+        * - false: 3 intentos fallidos
+        * */
+
         // Número máximo de intentos
         final int MAX_ATTEMPTS = 3;
         // Número de intentos actuales del usuario
@@ -124,6 +148,10 @@ public class FoodTrack {
     }
 
     static void drawMenu(String[] products, double[] prices) {
+        /*
+        * Dibujar el menú del día
+        * */
+
         System.out.println(MAGENTA + "===== MENÚ DEL DÍA =====" + RESET);
         for (int i = 0; i < products.length  ; i++) {
             System.out.printf("%s%d. %s ..... %.2f €%s%n",
@@ -134,6 +162,11 @@ public class FoodTrack {
     }
 
     static void showCart(String[] products, double[] prices, int[] units) {
+        /*
+        * Mostrar el carro de compra
+        * Muestra nombre de producto, precio y unidades solicitadas
+        * */
+
         System.out.println(YELLOW + "===== CESTA DE PRODUCTOS =====" + RESET);
         for (int i = 0; i < products.length; i++) {
             if ( units[i] > 0 ){
@@ -145,6 +178,13 @@ public class FoodTrack {
     private static void generateInvoice( double[] prices,
                                         int[] units,
                                         boolean inCash) {
+        /*
+        * Generar factura
+        * Calcula el subtotal
+        * Aplica los descuentos, si los hay
+        * Imprime la factura detallada (modo de pago, subtotal, descuento, total)
+        * */
+
         // Calcular subtotal
         double subTotal = calculateSubTotal(prices, units);
         // Descuentos: Si el subtotal supera 20 € 10% de descuento, si no, sin descuento (cero)
@@ -166,6 +206,11 @@ public class FoodTrack {
     }
 
     static double calculateSubTotal(double[] prices, int[] units){
+        /*
+        * Calcular subtotal de productos
+        * Recorre array de precios y unidades y suma los precios * unidades
+        * Devuelve el subtotal
+        * */
         double subTotal = 0;
         for (int i = 0; i < prices.length; i++) {
             if ( units[i] > 0 ) {
@@ -174,7 +219,5 @@ public class FoodTrack {
         }
         return subTotal;
     }
-
-
 
 }
