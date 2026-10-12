@@ -39,6 +39,11 @@ public class FoodTrack {
             drawMenu(products, prices, units);
             // Elegir opción
             System.out.print(CYAN + "Elige opción: " + RESET);
+            while (!sc.hasNextInt()) {
+                String in = sc.next();
+                System.out.println(RED + "[ERROR] Opción " + YELLOW + in + RESET + RED + " no válida" + RESET);
+                drawMenu(products, prices, units);
+            }
             option = sc.nextInt();
             sc.nextLine();
             switch (option) {
