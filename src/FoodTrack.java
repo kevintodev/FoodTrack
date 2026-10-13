@@ -1,3 +1,5 @@
+import org.apache.commons.text.WordUtils;
+
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -212,7 +214,9 @@ public class FoodTrack {
         System.out.printf("%sSubtotal .......... %.2f €%s%n", CYAN, subTotal, RESET);
         System.out.printf("%sDescuento .......... -%.2f €%s%n", CYAN, discount, RESET);
         System.out.printf("%sTOTAL .......... %.2f €%s%n", MAGENTA, total, RESET);
-        System.out.println(CYAN + "Gracias por su compra, " + USER + RESET);
+        System.out.println(CYAN + "Gracias por su compra, " +
+                WordUtils.capitalizeFully(USER)
+                + RESET);
 
     }
 
