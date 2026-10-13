@@ -6,6 +6,8 @@ out/
 .idea/
 *.iml
 github.txt
+lib/
+*.jar
 ### Eclipse ###
 .apt_generated
 .classpath
